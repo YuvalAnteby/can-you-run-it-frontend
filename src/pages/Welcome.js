@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {FormControl, InputLabel, MenuItem, Select, TextField} from '@mui/material';
+import {Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField} from '@mui/material';
 import axios from "axios";
 
 export default function CpuSearch() {
@@ -29,7 +29,8 @@ export default function CpuSearch() {
             const fetchCpuModels = async () => {
                 try {
                     const response = await axios.get(`${BASE_URL}/hardware/cpus/brand?brand=${selectedBrand}`);
-                    setCpuModel(response.data); // Assuming API returns an array of models
+                    const modelNames = response.data.map((cpu) => cpu.model);
+                    setSearchQuery(modelNames); // Assuming API returns an array of models
                     console.log(`Fetched CPU Models for ${selectedBrand}:`, response.data); // Log fetched CPU models
                 } catch (error) {
                     console.error("Error fetching CPU models:", error);
@@ -58,7 +59,6 @@ export default function CpuSearch() {
     }, [debouncedQuery]);
 
     return (
-
         <>
             {/* Main header */}
             <div className="MainHeading">
@@ -82,15 +82,26 @@ export default function CpuSearch() {
             </FormControl>
 
             {/* TextField for CPU model search */}
-            <TextField
+            <Autocomplete
+                disablePortal
+                disabled={!selectedBrand} // Disable input until a company is selected
+                options={searchQuery}
+                getOptionLabel={(option) => option}
+                value={cpuModelQuery}
+                renderInput={(params) => (
+                    <TextField {...params}
+                               label="Search CPU Model"
+                               variant="filled"
+                               fullWidth
+                               onChange={(e) => setCpuModel(e.target.value)}
+                    />
+                )}
+                onChange={(event, newValue) => setCpuModel(newValue || '')}
+
                 label={!selectedBrand ? "Select a CPU company first" : "Search CPU Model (e.g., Ryzen 3600)"}
                 variant="filled"
-                value={cpuModelQuery}
-                onChange={(e) => setCpuModel(e.target.value)} // Update cpuModelQuery directly
                 fullWidth
                 margin="normal"
-                // Disable input until a company is selected
-                disabled={!selectedBrand}
             />
         </>
     );
