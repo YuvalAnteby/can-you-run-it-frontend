@@ -1,108 +1,32 @@
-import React, {useState, useEffect} from 'react';
-import {Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField} from '@mui/material';
-import axios from "axios";
+import React from 'react';
+import {Button} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
-export default function CpuSearch() {
-    // State to store the selected input by the user.
-    const [selectedBrand, setSelectedBrand] = useState('');
-    const [cpuModelQuery, setCpuModel] = useState('');
-    // Placeholder data for CPU companies TODO in the future, fetch from DB
-    const cpuCompanies = ['Intel', 'AMD'];
-    // State for search results (to display suggestions if needed later)
-    const [searchQuery, setSearchQuery] = useState([]);
-    // Debounced query to reduce API calls
-    const [debouncedQuery, setDebouncedQuery] = useState("");
 
-    // Debounce logic to delay the API call until the user stops typing
-    useEffect(() => {
-        const debounceTimeout = setTimeout(() => {
-            setDebouncedQuery(cpuModelQuery);  // Use cpuModelQuery here
-            console.log(debounceTimeout);
-        }, 500); // Delay in milliseconds (adjust as needed)
-        return () => clearTimeout(debounceTimeout);
-    }, [cpuModelQuery]);  // Use cpuModelQuery as the dependency
+const Welcome = () => {
 
-    // Fetch CPU models whenever a brand is selected
-    useEffect(() => {
-        if (selectedBrand) {
-            const BASE_URL = "http://localhost:8000/api";
-            const fetchCpuModels = async () => {
-                try {
-                    const response = await axios.get(`${BASE_URL}/hardware/cpus/brand?brand=${selectedBrand}`);
-                    const modelNames = response.data.map((cpu) => cpu.model);
-                    setSearchQuery(modelNames); // Assuming API returns an array of models
-                    console.log(`Fetched CPU Models for ${selectedBrand}:`, response.data); // Log fetched CPU models
-                } catch (error) {
-                    console.error("Error fetching CPU models:", error);
-                }
-            };
-
-            fetchCpuModels();
-        }
-    }, [selectedBrand]);
-
-    // Fetch CPUs by model when the debounced query changes
-    useEffect(() => {
-        if (debouncedQuery) {
-            const BASE_URL = "http://localhost:8000/api";
-            const fetchCpusByModel = async () => {
-                try {
-                    const response = await axios.get(`${BASE_URL}/hardware/cpus/model?model=${debouncedQuery}`);
-                    console.log("Search Results:", response.data); // Handle or display search results
-                } catch (error) {
-                    console.error("Error searching CPUs by model:", error);
-                }
-            };
-
-            fetchCpusByModel();
-        }
-    }, [debouncedQuery]);
-
+    const textColor = '#e0e1dd';
+    const navigate = useNavigate(); //Hook to navigate to another page
     return (
-        <>
-            {/* Main header */}
-            <div className="MainHeading">
-                <h1>Enter your setup info</h1>
-            </div>
-
-            {/* Dropdown for CPU brand */}
-            <FormControl fullWidth variant="filled" margin="normal">
-                <InputLabel>CPU Company</InputLabel>
-                <Select
-                    value={selectedBrand}
-                    // Update the selected company
-                    onChange={(e) => setSelectedBrand(e.target.value)}
-                    label="CPU Company">
-                    {cpuCompanies.map((company) => (
-                        <MenuItem key={company} value={company}>
-                            {company}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-
-            {/* TextField for CPU model search */}
-            <Autocomplete
-                disablePortal
-                disabled={!selectedBrand} // Disable input until a company is selected
-                options={searchQuery}
-                getOptionLabel={(option) => option}
-                value={cpuModelQuery}
-                renderInput={(params) => (
-                    <TextField {...params}
-                               label="Search CPU Model"
-                               variant="filled"
-                               fullWidth
-                               onChange={(e) => setCpuModel(e.target.value)}
-                    />
-                )}
-                onChange={(event, newValue) => setCpuModel(newValue || '')}
-
-                label={!selectedBrand ? "Select a CPU company first" : "Search CPU Model (e.g., Ryzen 3600)"}
-                variant="filled"
-                fullWidth
-                margin="normal"
-            />
-        </>
+        <div
+            className="parent"
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: textColor,
+                height: '100vh',
+            }}>
+            <h1>Welcome to PC Part Picker</h1>
+            <Button variant="contained" style={{ margin: '10px' }}>Login</Button>
+            <Button
+                variant="text"
+                style={{ margin: '10px' }}
+                onClick={() => navigate('/setup')}>
+                Continue as a guest</Button>
+        </div>
     );
+
 }
+export default Welcome;
