@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import axios from "axios";
 
+// TODO add feature to search from all CPUs, with filter button to filter using company/socket etc
 const HardwareSelection = ({type, brand, setBrand, model, setModel}) => {
 
     const isCPU = type === "CPU";

@@ -20,6 +20,8 @@ const SetupFill = () => {
     const handleContinueToGames = () => {
         if (gpuModel && cpuModel && ramAmount) {
             setMoveToGames(true);
+            console.log("Continued to games....")
+            //TODO create games related pages and backend
         } else {
             setMoveToGames(false);
         }
@@ -35,7 +37,7 @@ const SetupFill = () => {
     };
 
     const handleContinueToRam = () => {
-        if (gpuBrand && cpuModel) {
+        if (cpuModel && gpuModel) {
             setShowRamSelection(true);
         } else {
             setShowRamSelection(false);
@@ -69,7 +71,7 @@ const SetupFill = () => {
                                    setBrand={setCpuBrand}
                                    model={cpuModel}
                                    setModel={setCpuModel}
-                onChange={handleContinueToGpu}/>
+                                   onChange={handleContinueToGpu}/>
 
                 <Button
                     variant="contained"
@@ -79,8 +81,9 @@ const SetupFill = () => {
                     Continue to pick your GPU
                 </Button>
             </div>
+
             {/* GPU div */}
-            {showGpuSelection && /*cpuModel && */(
+            {showGpuSelection && cpuModel && (
                 <div
                     style={{
                         height: '100vh',
@@ -102,7 +105,8 @@ const SetupFill = () => {
                                            brand={gpuBrand}
                                            setBrand={setGpuBrand}
                                            model={gpuModel}
-                                           setModel={setGpuModel}/>
+                                           setModel={setGpuModel}
+                                           onChange={handleContinueToRam}/>
                         <Button
                             variant="contained"
                             sx={{margin: '10px'}}
@@ -113,12 +117,13 @@ const SetupFill = () => {
                     </div>
                 </div>
             )}
+
             {/* RAM div */}
-            {/* showRamSelection */ showGpuSelection && cpuModel && /* gpuModel && */ (
+            {showRamSelection && showGpuSelection && cpuModel && gpuModel && (
                 <div
                     style={{
                         height: '100vh',
-                        width: '100%', // Ensure the GPU Selection takes up 60% of the container's width
+                        width: '100%',
                         display: 'flex',
                         marginTop: '0px',
                         flexDirection: 'column',
