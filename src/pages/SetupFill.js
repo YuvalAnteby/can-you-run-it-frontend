@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import {Button} from "@mui/material";
 import RamSelection from "../components/RamSelection";
 import HardwareSelection from "../components/HardwareSelection";
-
+import {useNavigate} from "react-router-dom";
 
 const SetupFill = () => {
+    //TODO change the model to hardware id
     const [cpuBrand, setCpuBrand] = useState(''); // Track selected CPU brand
     const [cpuModel, setCpuModel] = useState(''); // Track selected CPU model
 
@@ -17,10 +18,12 @@ const SetupFill = () => {
     const [showRamSelection, setShowRamSelection] = useState(false); // Track if GPU selection should be shown
     const [moveToGames, setMoveToGames] = useState(false); // Track if GPU selection should be shown
 
+    const navigate = useNavigate();
+
     const handleContinueToGames = () => {
         if (gpuModel && cpuModel && ramAmount) {
             setMoveToGames(true);
-            console.log("Continued to games....")
+            navigate("/games", { state: { gpuModel, cpuModel, ramAmount } })
             //TODO create games related pages and backend
         } else {
             setMoveToGames(false);
