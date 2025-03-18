@@ -3,6 +3,7 @@ import {Routes, Route} from 'react-router-dom';
 import {ThemeProvider, CssBaseline} from '@mui/material';
 import Welcome from './pages/Welcome';
 import SetupFill from './pages/SetupFill';
+import Games from './pages/Games';
 import darkTheme from './darkTheme';
 
 
@@ -14,6 +15,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Welcome/>}/>
                 <Route path="/setup" element={<SetupFill/>}/>
+                <Route path="/games" element={<Games/>}/>
             </Routes>
 
         </ThemeProvider>
