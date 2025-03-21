@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useLocation } from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import GameCard from "../components/GameCard";
 import axios from "axios";
 import {Box, Stack} from "@mui/material";
@@ -13,10 +13,6 @@ const Games = () => {
     const [filteredGames, setFilteredGames] = useState([]); // Games matching search
     const [debouncedQuery, setDebouncedQuery] = useState(""); // Delayed search
 
-
-    //console.log("GPU: " + gpuModel + ", CPU: " + cpuModel, ", ramAmount: " + ramAmount);
-
-
     // Debounce input to reduce API calls
     useEffect(() => {
         const delay = setTimeout(() => {
@@ -29,6 +25,7 @@ const Games = () => {
         const fetchGames = async () => {
             try {
                 console.log("Starting fetching games...");
+                //const ALL_GAMES = `http://172.16.26.200:8000/api/games`
                 const ALL_GAMES = `http://localhost:8000/api/games`
                 const response = await axios.get(ALL_GAMES)
                 setGames(response.data);
@@ -60,7 +57,7 @@ const Games = () => {
                 <Stack direction="row" spacing={3} flexWrap="wrap">
                     {games.map((game) => (
                         <Box key={game.id} sx={{ width: { xs: '100%', sm: '48%', md: '23%' }, marginBottom: 2 }}>
-                            <GameCard game={game} />
+                            <GameCard game={game} cpuModel={cpuModel} gpuModel={gpuModel} ramAmount={ramAmount} />
                         </Box>
                     ))}
                 </Stack>

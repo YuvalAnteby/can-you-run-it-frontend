@@ -1,16 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
+import React from 'react';
 import {useNavigate} from "react-router-dom";
-import {Box, Card, CardContent, CardMedia, Typography} from "@mui/material";
+import {Box, Card, CardMedia, Typography} from "@mui/material";
 
-const GameCard = ({game}) => {
+const GameCard = ({game, cpuModel, gpuModel, ramAmount}) => {
 
     const navigate = useNavigate();
+    const handleClick = () => {
+        navigate(`/game/${game.id}`, {state: {game, gpuModel, cpuModel, ramAmount}});
+    };
 
     return (
         <Card sx={{
-            width: { xs: '120px', sm: '150px', md: '190px' },  // Adjust the card size based on screen width
-            height: { xs: '230px', sm: '280px', md: '360px' },
+            width: {xs: '120px', sm: '150px', md: '190px'},  // Adjust the card size based on screen width
+            height: {xs: '230px', sm: '280px', md: '360px'},
             display: 'flex',
             margin: '4px',
             flexDirection: 'column',
@@ -23,7 +25,9 @@ const GameCard = ({game}) => {
                 transform: 'scale(1.05)',  // Scale on hover (optional)
             },
         }}
-              onClick={() => navigate('/')}> {/* TODO set destination */}
+              onClick={() =>
+                  handleClick()
+              }> {/* TODO set destination */}
             <CardMedia
                 component="img"
                 alt={game.name}
@@ -51,7 +55,7 @@ const GameCard = ({game}) => {
                     margin: 0,
                     paddingTop: '4px',
                     fontWeight: 'bold',
-                    fontSize: { xs: '14px', sm: '16px', md: '18px' }, // Adjust text size for responsiveness
+                    fontSize: {xs: '14px', sm: '16px', md: '18px'}, // Adjust text size for responsiveness
                     overflow: 'hidden',
                 }}>
                     {game.name}
