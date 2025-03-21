@@ -24,11 +24,9 @@ const SetupFill = () => {
         if (gpuModel && cpuModel && ramAmount) {
             setMoveToGames(true);
             navigate("/games", { state: { gpuModel, cpuModel, ramAmount } })
-            //TODO create games related pages and backend
         } else {
             setMoveToGames(false);
         }
-        console.log();
     }
 
     const handleContinueToGpu = () => {
