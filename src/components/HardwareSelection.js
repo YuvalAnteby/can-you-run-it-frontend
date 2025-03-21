@@ -31,6 +31,7 @@ const HardwareSelection = ({type, brand, setBrand, model, setModel}) => {
     useEffect(() => {
         if (brand) {
             const BRANDS_URL = `http://localhost:8000/api/hardware/${type.toLowerCase()}s/brand?brand=${brand}`;
+            //const BRANDS_URL = `http://172.16.26.200:8000/api/hardware/${type.toLowerCase()}s/brand?brand=${brand}`;
             const fetchModels = async () => {
                 try {
                     const response = await axios.get(BRANDS_URL);
