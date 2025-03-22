@@ -2,11 +2,11 @@ import React from 'react';
 import {useNavigate} from "react-router-dom";
 import {Box, Card, CardMedia, Typography} from "@mui/material";
 
-const GameCard = ({game, cpuModel, gpuModel, ramAmount}) => {
+const GameCard = ({game, cpu, gpu, ramAmount}) => {
 
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate(`/game/${game.id}`, {state: {game, gpuModel, cpuModel, ramAmount}});
+        navigate(`/game/${game.id}`, {state: {game, cpu, gpu, ramAmount}});
     };
 
     return (
@@ -25,9 +25,7 @@ const GameCard = ({game, cpuModel, gpuModel, ramAmount}) => {
                 transform: 'scale(1.05)',  // Scale on hover (optional)
             },
         }}
-              onClick={() =>
-                  handleClick()
-              }> {/* TODO set destination */}
+              onClick={() => handleClick()}>
             <CardMedia
                 component="img"
                 alt={game.name}

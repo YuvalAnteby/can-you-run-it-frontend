@@ -3,11 +3,11 @@ import {Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField} from
 import axios from "axios";
 
 // TODO add feature to search from all CPUs, with filter button to filter using company/socket etc
-const HardwareSelection = ({type, brand, setBrand, model, setModel}) => {
+const HardwareSelection = ({type, brand, setBrand, hardware, setHardware}) => {
 
     const isCPU = type === "CPU";
     const companies = isCPU ? ["Intel", "AMD"] : ["Nvidia", "AMD", "Intel"];
-    const [models, setModels] = useState([]);
+
     const [debouncedQuery, setDebouncedQuery] = useState("");
     // State for search results (to display suggestions if needed later)
     const [searchQuery, setSearchQuery] = useState([]);
@@ -18,11 +18,10 @@ const HardwareSelection = ({type, brand, setBrand, model, setModel}) => {
      */
     useEffect(() => {
         const debounceTimeout = setTimeout(() => {
-            setDebouncedQuery(model);  // Use gpuModelQuery here
-            console.log(debounceTimeout);
+            setDebouncedQuery(hardware?.model || "");  // Use gpuModelQuery here
         }, 500); // Delay in milliseconds (adjust as needed)
         return () => clearTimeout(debounceTimeout);
-    }, [model]);  // Use gpuModelQuery as the dependency
+    }, [hardware?.model]);  // Use gpuModelQuery as the dependency
 
     /**
      * Fetches GPUs/CPUs models when a brand is selected.
@@ -35,10 +34,10 @@ const HardwareSelection = ({type, brand, setBrand, model, setModel}) => {
             const fetchModels = async () => {
                 try {
                     const response = await axios.get(BRANDS_URL);
-                    const modelNames = response.data.map((data) => data.model);
-                    setSearchQuery(modelNames); // Assuming API returns an array of models
-                    setModel("");
-                    console.log(`Fetched ${type} Models for ${brand}:`, response.data); // Log fetched GPU models
+                    //const modelNames = response.data.map((data) => data.model);
+                    setSearchQuery(response.data); // Assuming API returns an array of models
+                    setHardware(null);
+                    //console.log(`Fetched ${type} Models for ${brand}:`, response.data); // Log fetched GPU models
                 } catch (error) {
                     console.error(`Error fetching ${type} models:`, error);
                 }
@@ -58,12 +57,14 @@ const HardwareSelection = ({type, brand, setBrand, model, setModel}) => {
             const fetchByModel = async () => {
                 try {
                     const response = await axios.get(`${BASE_URL}${debouncedQuery}`);
+                    if (response.data.length > 0) {
+                        setHardware(response.data[0]);
+                    }
                     console.log(`${type} Search Results:`, response.data); // Handle or display search results
                 } catch (error) {
                     console.error(`Error searching ${type} by model:`, error);
                 }
             };
-
             fetchByModel();
         }
     }, [debouncedQuery]);
@@ -81,7 +82,7 @@ const HardwareSelection = ({type, brand, setBrand, model, setModel}) => {
             }}>
             {/* GPU/CPU brand */}
             <FormControl fullWidth variant="filled" margin="normal"
-                         style={{padding:'0px', marginTop: '10px'}}>
+                         style={{padding: '0px', marginTop: '10px'}}>
 
                 <InputLabel>{type} Company</InputLabel>
                 <Select
@@ -90,7 +91,7 @@ const HardwareSelection = ({type, brand, setBrand, model, setModel}) => {
                     // Update the selected company
                     onChange={(e) => {
                         setBrand(e.target.value);
-                        setModel("");
+                        setHardware(null); //Reset model selection
                     }}
                     label={`${type} Company`}>
                     {companies.map((company) => (
@@ -101,25 +102,23 @@ const HardwareSelection = ({type, brand, setBrand, model, setModel}) => {
 
             {/* GPU model */}
             <Autocomplete
+                variant="filled"
+                fullWidth
                 disablePortal
                 disabled={!brand} // Disable input until a company is selected
                 options={searchQuery}
-                getOptionLabel={(option) => option}
-                value={model}
-
+                getOptionLabel={(option) => option.fullname || option.model}
+                value={hardware || null}
+                onChange={(e, newValue) => {
+                    setHardware(newValue);
+                }}
+                //label={!brand ? "Select a GPU company first" : "Search GPU Model (e.g., RTX 4090)"}
                 renderInput={(params) => (
                     <TextField {...params}
                                label={`Search ${type} Model`}
                                variant="filled"
-                               fullWidth
-                               onChange={(e) => setModel(e.target.value)}/>
-                )}
-                onChange={(event, newValue) => setModel(newValue || '')}
-                //label={!brand ? "Select a GPU company first" : "Search GPU Model (e.g., RTX 4090)"}
-                variant="filled"
-                fullWidth
-                //margin="normal"
-            />
+                               fullWidth />
+                )}/>
         </div>
     )
 }

@@ -7,7 +7,7 @@ import {Box, Stack} from "@mui/material";
 
 const Games = () => {
     const location = useLocation();
-    const { gpuModel, cpuModel, ramAmount } = location.state || {};
+    const { cpu, gpu, ramAmount } = location.state || {};
     const [games, setGames] = useState([]); // All games from API
     const [searchQuery, setSearchQuery] = useState(""); // Search input
     const [filteredGames, setFilteredGames] = useState([]); // Games matching search
@@ -24,13 +24,13 @@ const Games = () => {
     useEffect(() => {
         const fetchGames = async () => {
             try {
-                console.log("Starting fetching games...");
                 //const ALL_GAMES = `http://172.16.26.200:8000/api/games`
                 const ALL_GAMES = `http://localhost:8000/api/games`
                 const response = await axios.get(ALL_GAMES)
                 setGames(response.data);
                 setFilteredGames(response.data);
-                console.log(`Fetched games:`, response.data); // Log fetched GPU models
+                console.log(cpu, gpu, ramAmount);
+                //console.log(`Fetched games:`, response.data); // Log fetched GPU models
             } catch (e) {
                 console.log(`Error fetching games: `, e);
             }
@@ -57,7 +57,7 @@ const Games = () => {
                 <Stack direction="row" spacing={3} flexWrap="wrap">
                     {games.map((game) => (
                         <Box key={game.id} sx={{ width: { xs: '100%', sm: '48%', md: '23%' }, marginBottom: 2 }}>
-                            <GameCard game={game} cpuModel={cpuModel} gpuModel={gpuModel} ramAmount={ramAmount} />
+                            <GameCard game={game} cpu={cpu} gpu={gpu} ramAmount={ramAmount} />
                         </Box>
                     ))}
                 </Stack>

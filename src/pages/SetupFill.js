@@ -7,41 +7,37 @@ import {useNavigate} from "react-router-dom";
 const SetupFill = () => {
     //TODO change the model to hardware id
     const [cpuBrand, setCpuBrand] = useState(''); // Track selected CPU brand
-    const [cpuModel, setCpuModel] = useState(''); // Track selected CPU model
+    const [cpu, setCpu] = useState(''); // Track selected CPU model
 
     const [gpuBrand, setGpuBrand] = useState(''); // Track selected GPU brand
-    const [gpuModel, setGpuModel] = useState(''); // Track selected GPU model
+    const [gpu, setGpu] = useState(''); // Track selected GPU model
 
     const [ramAmount, setRamAmount] = useState('');
 
-    const [showGpuSelection, setShowGpuSelection] = useState(false); // Track if GPU selection should be shown
-    const [showRamSelection, setShowRamSelection] = useState(false); // Track if GPU selection should be shown
-    const [moveToGames, setMoveToGames] = useState(false); // Track if GPU selection should be shown
+    const [showGpu, setShowGpu] = useState(false); // Track if GPU selection should be shown
+    const [showRam, setShowRam] = useState(false); // Track if RAM selection should be shown
 
     const navigate = useNavigate();
 
     const handleContinueToGames = () => {
-        if (gpuModel && cpuModel && ramAmount) {
-            setMoveToGames(true);
-            navigate("/games", { state: { gpuModel, cpuModel, ramAmount } })
-        } else {
-            setMoveToGames(false);
+        if (cpu && gpu && ramAmount) {
+            navigate("/games", {state: {cpu, gpu, ramAmount}})
         }
     }
 
     const handleContinueToGpu = () => {
-        if (cpuModel) {
-            setShowGpuSelection(true);
+        if (cpu) {
+            setShowGpu(true);
         } else {
-            setShowGpuSelection(false);
+            setShowGpu(false);
         }
     };
 
     const handleContinueToRam = () => {
-        if (cpuModel && gpuModel) {
-            setShowRamSelection(true);
+        if (cpu && gpu) {
+            setShowRam(true);
         } else {
-            setShowRamSelection(false);
+            setShowRam(false);
         }
     };
 
@@ -70,21 +66,21 @@ const SetupFill = () => {
                 <HardwareSelection type="CPU"
                                    brand={cpuBrand}
                                    setBrand={setCpuBrand}
-                                   model={cpuModel}
-                                   setModel={setCpuModel}
+                                   hardware={cpu}
+                                   setHardware={setCpu}
                                    onChange={handleContinueToGpu}/>
 
                 <Button
                     variant="contained"
                     sx={{margin: '10px'}}
                     onClick={handleContinueToGpu}
-                    disabled={!cpuModel}>
+                    disabled={!cpu}>
                     Continue to pick your GPU
                 </Button>
             </div>
 
             {/* GPU div */}
-            {showGpuSelection && cpuModel && (
+            {showGpu && cpu && (
                 <div
                     style={{
                         height: '100vh',
@@ -105,14 +101,14 @@ const SetupFill = () => {
                         <HardwareSelection type="GPU"
                                            brand={gpuBrand}
                                            setBrand={setGpuBrand}
-                                           model={gpuModel}
-                                           setModel={setGpuModel}
+                                           hardware={gpu}
+                                           setHardware={setGpu}
                                            onChange={handleContinueToRam}/>
                         <Button
                             variant="contained"
                             sx={{margin: '10px'}}
                             onClick={handleContinueToRam}
-                            disabled={!gpuModel || !cpuModel}>
+                            disabled={!gpu || !cpu}>
                             Continue to pick your RAM amount
                         </Button>
                     </div>
@@ -120,7 +116,7 @@ const SetupFill = () => {
             )}
 
             {/* RAM div */}
-            {showRamSelection && showGpuSelection && cpuModel && gpuModel && (
+            {showRam && showGpu && cpu && gpu && (
                 <div
                     style={{
                         height: '100vh',
@@ -138,7 +134,7 @@ const SetupFill = () => {
                         variant="contained"
                         sx={{margin: '10px'}}
                         onClick={handleContinueToGames}
-                        disabled={!ramAmount || !cpuModel || !cpuModel}>
+                        disabled={!ramAmount || !cpu || !gpu}>
                         Continue to games
                     </Button>
                 </div>

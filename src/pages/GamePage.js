@@ -6,7 +6,7 @@ import GameBanner from "../components/GameBanner";
 const GamePage = () => {
     const location = useLocation();
     console.log("Location State:", location.state); // Debugging line
-    const {game, gpuModel, cpuModel, ramAmount} = location.state || {};
+    const {game, cpu, gpu, ramAmount} = location.state || {};
 
     if (!game) {
         return <Typography variant="h4">Game not found</Typography>;
@@ -18,8 +18,8 @@ const GamePage = () => {
 
             <Box sx={{marginTop: 2}}>
                 <Typography variant="h5">Your Hardware:</Typography>
-                <Typography>CPU: {cpuModel}</Typography>
-                <Typography>GPU: {gpuModel}</Typography>
+                <Typography>CPU: {cpu.model}</Typography>
+                <Typography>GPU: {gpu.model}</Typography>
                 <Typography>RAM: {ramAmount} GB</Typography>
             </Box>
         </Box>
