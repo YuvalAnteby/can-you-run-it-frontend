@@ -45,7 +45,7 @@ const HardwareSelection = ({type, brand, setBrand, hardware, setHardware}) => {
 
             fetchModels();
         }
-    }, [brand]);
+    }, [brand, setBrand, setHardware, type]);
 
     /**
      * Fetches GPUs/CPUs by model when the debounced query changes.
@@ -67,7 +67,7 @@ const HardwareSelection = ({type, brand, setBrand, hardware, setHardware}) => {
             };
             fetchByModel();
         }
-    }, [debouncedQuery]);
+    }, [debouncedQuery, setHardware, type]);
 
 
     return (
