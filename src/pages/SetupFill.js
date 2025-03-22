@@ -138,7 +138,7 @@ const SetupFill = () => {
                         variant="contained"
                         sx={{margin: '10px'}}
                         onClick={handleContinueToGames}
-                        disabled={!ramAmount && !cpuModel && !cpuModel}>
+                        disabled={!ramAmount || !cpuModel || !cpuModel}>
                         Continue to games
                     </Button>
                 </div>
