@@ -1,6 +1,14 @@
-# Getting Started with Create React App
+# Can You Run It - Frontend repo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The project is currently still under development, for questions and requests regarding this project DM me
+The repo is part of the Can You Run It web application project. Meant to be a better alterantive, more accurate for the known 'Can You Run It' websites.
+
+## Current tech in use of the frontend:
+* JavaScript - main language
+* React.js - core framework
+* React Router – page navigation
+* Axios – For API request
+* Docker
 
 ## Available Scripts
 
