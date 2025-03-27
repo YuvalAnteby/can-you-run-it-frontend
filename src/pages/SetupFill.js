@@ -5,7 +5,6 @@ import HardwareSelection from "../components/HardwareSelection";
 import {useNavigate} from "react-router-dom";
 
 const SetupFill = () => {
-    //TODO change the model to hardware id
     const [cpuBrand, setCpuBrand] = useState(''); // Track selected CPU brand
     const [cpu, setCpu] = useState(''); // Track selected CPU model
 
