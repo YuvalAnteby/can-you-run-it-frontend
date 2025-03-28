@@ -1,78 +1,116 @@
-# Can You Run It - Frontend repo
+# 🎮 Can You Run It — Frontend
 
-The project is currently still under development, for questions and requests regarding this project DM me
-The repo is part of the Can You Run It web application project. Meant to be a better alterantive, more accurate for the known 'Can You Run It' websites.
+<p align="center">
+  <img src="https://img.shields.io/badge/React-18-blue?logo=react" alt="React">
+  <img src="https://img.shields.io/badge/MUI-5-blue?logo=mui&logoColor=white" alt="Material UI">
+  <img src="https://img.shields.io/badge/Axios-HTTP-yellow" alt="Axios">
+  <img src="https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg" alt="License: MPL 2.0">
+</p>
 
-## Current tech in use of the frontend:
-* JavaScript - main language
-* React.js - core framework
-* React Router – page navigation
-* Axios – For API request
-* Docker
+This is the frontend for **Can You Run It**, a performance compatibility checker for PC games. Built with **React** and **Material UI**, it lets users explore games and test whether their current or selected hardware can run them at desired settings (e.g., resolution and graphics quality).
 
-## Available Scripts
+> 🔗 This app connects to the [backend API](https://github.com/YuvalAnteby/CanYouRunIt-Backend), which must be running locally with access to the private database for full functionality.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚧 Project Status
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+> 🛠️ **Currently in active development**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- The app is functional for demo/testing purposes but incomplete.
+- The backend and database are required for API functionality and are not publicly available at this time.
+- UI and feature work is ongoing.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📚 Table of Contents
 
-### `npm run build`
+- [Tech Stack](#-tech-stack)
+- [Features](#-features)
+    - [Implemented](#-implemented)
+    - [Upcoming](#-upcoming)
+- [Running Locally](#-running-locally)
+- [Screenshots](#-screenshots)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Related Projects](#-related-projects)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## ⚙️ Tech Stack
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **React** (with functional components and hooks)
+- **Axios** for API calls
+- **React Router** for routing
+- **Material UI (MUI)** for component styling
+- **JavaScript** 
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🌟 Features
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### ✅ Implemented
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Game list display with game banners and cards
+- Hardware selection UI (CPU, GPU, RAM) using MUI components
+- Autocomplete-style search for hardware inputs
+- Compatibility check against selected game and hardware configuration
+- Integration with backend API to fetch:
+    - Available games
+    - Hardware options
+    - Requirement check results
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 🔜 Upcoming
 
-## Learn More
+- Game search and filtering
+- Game detail view (with price, genre, etc.)
+- User accounts and saved configurations
+- Performance optimization and lazy loading
+- Responsive design polish
+- Light/dark theme toggle
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🐳 Running Locally
 
-### Code Splitting
+> ⚠️ Requires the backend to be running with access to the local/private MongoDB.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Prerequisites
 
-### Analyzing the Bundle Size
+- Node.js (v18+ recommended)
+- Backend server running locally ([setup instructions here](https://github.com/YuvalAnteby/CanYouRunIt-Backend))
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Setup
 
-### Making a Progressive Web App
+```bash
+git clone https://github.com/YuvalAnteby/can-you-run-it-frontend.git
+cd can-you-run-it-frontend
+npm install
+npm start
+```
+The app will run at http://localhost:3000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 🖼️ Screenshots
+Coming soon! 🚧
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## 🤝 Contributing
+If you'd like to contribute, feel free to fork the project and open a pull request.<br/>
+Feedback and feature suggestions are always welcome!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+## 📄 License
+This project is licensed under the Mozilla Public License Version 2.0.<br />
+See the [LICENSE](https://github.com/YuvalAnteby/can-you-run-it-frontend/blob/main/LICENSE) file for details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## 🔗 Related Projects
+
+- [Backend Repo (FastAPI)](https://github.com/YuvalAnteby/CanYouRunIt-Backend)
+
+---
