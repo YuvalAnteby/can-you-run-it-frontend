@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {Typography, Box} from "@mui/material";
-import GameBanner from "../components/GameBanner";
+import GameBanner from "../components/games/GameBanner";
 import RequirementsSelection from "../components/RequirementsSelection";
 import axios from "axios";
 

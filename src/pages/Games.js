@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
-import GameCard from "../components/GameCard";
+import GameCard from "../components/games/GameCard";
 import axios from "axios";
 import {Box, Stack} from "@mui/material";
 
