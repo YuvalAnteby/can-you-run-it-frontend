@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Box, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
-import FpsSlider from "./hardware/FpsSlider";
+import FpsSlider from "../hardware/FpsSlider";
 
 const RequirementsSelection = ({game, resolution, setResolution, setting, setSetting, fps, setFps}) => {
 
