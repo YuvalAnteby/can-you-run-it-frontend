@@ -4,6 +4,7 @@ import {Typography, Box} from "@mui/material";
 import GameBanner from "../components/games/GameBanner";
 import RequirementsSelection from "../components/requirements/RequirementsSelection";
 import axios from "axios";
+import AdditionalInfo from "../components/requirements/AdditionalInfo";
 
 const GamePage = () => {
     const location = useLocation();
@@ -65,7 +66,7 @@ const GamePage = () => {
                 alignItems: 'center',
                 gap: 3
             }}>
-                <Box sx={{flex: 0.8}}>
+                <Box sx={{flex: 1}}>
                     <RequirementsSelection
                         game={game}
                         resolution={chosenResolution}
@@ -82,6 +83,13 @@ const GamePage = () => {
                             Your chosen FPS ({chosenFps}) is {isFpsMet ? "achievable ✅" : "not achievable ❌"}.
                         </Typography>
                     )}
+                </Box>
+
+                <Box sx={{flex: 1}}>
+                    <AdditionalInfo
+                    game={game}>
+
+                    </AdditionalInfo>
                 </Box>
             </Box>
 
