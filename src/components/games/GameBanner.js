@@ -18,30 +18,25 @@ const GameBanner = ({game}) => {
                 width: '100%',
             }}>
             {/* Game Banner */}
-            <div style={{display: 'flex', flexDirection: 'row'}}>
-                <Box sx={{
-                    display: 'flex',
-                    alignItems: 'center', // Ensures image is centered in its container
-                    justifyContent: 'center',
-                    maxHeight: '500px',
-                }}>
-                    <picture
-                        style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%'}}>
-                        <source media="(max-width: 600px)" srcSet={`${game.landscape_s}.jpg`}/>
-                        <source media="(max-width: 1024px)" srcSet={`${game.landscape_s}.jpg`}/>
-                        <source media="(min-width: 1025px)" srcSet={`${game.landscape_m}.jpg`}/>
-                        <img
-                            src={game.landscape_xl}
-                            alt={game.name}
+            <Box sx={{display: 'flex', flexDirection: 'row', width: '100%' }}>
+                <Box sx={{flex: 1.4}}>
+                    <Box sx={{position: "relative", paddingBottom: "56.25%"}}>
+                        <iframe
+                            src={`${game.trailer_url}?autoplay=0`}
+                            title="Game Trailer"
+                            frameBorder="0"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
                             style={{
-                                width: 'auto',
-                                height: '100%',
-                                objectFit: 'cover',
-                                maxHeight: '500px',
-                                borderRadius: '8px'
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                borderRadius: '12px'
                             }}
                         />
-                    </picture>
+                    </Box>
                 </Box>
                 {/* Game text */}
                 <Box sx={{
@@ -50,35 +45,41 @@ const GameBanner = ({game}) => {
                     justifyContent: 'center',
                     alignItems: 'flex-start',
                     padding: '20px',
-                    flex: 1,  // Allow text to take up the remaining space
+                    flex: 0.8,  // Allow text to take up the remaining space
                     color: 'white',  // Make the text stand out on dark background
                 }}>
-                    <Typography variant="h3" sx={{marginBottom: 2, fontWeight: "bold", fontSize: { xs: '2rem', md: '3rem' }}}>
+                    <Typography variant="h2"
+                                sx={{marginBottom: 2, fontWeight: "bold", fontSize: {xs: '2rem', md: '2.5rem'}}}>
                         {game.name}
                     </Typography>
 
-                    <Typography variant="h5" sx={{marginBottom: 1, fontWeight: "bold", fontSize: { xs: '1.2rem', md: '1.5rem' }}}>
+                    <Typography variant="h6"
+                                sx={{marginBottom: 1, fontWeight: "bold", fontSize: {xs: '1.2rem', md: '1.3rem'}}}>
                         Developer: {game.developer}
                     </Typography>
 
-                    <Typography variant="h5" sx={{marginBottom: 1, fontWeight: "bold", fontSize: { xs: '1.2rem', md: '1.5rem' }}}>
+                    <Typography variant="h6"
+                                sx={{marginBottom: 1, fontWeight: "bold", fontSize: {xs: '1.2rem', md: '1.3rem'}}}>
                         Publisher: {game.publisher}
                     </Typography>
 
-                    <Typography sx={{marginTop: 3, fontSize: { xs: '1rem', md: '1.2rem' }}} variant="h6">
+                    <Typography variant="body2" sx={{marginTop: 3, fontSize: {xs: '0.8rem', md: '1rem'}}}>
                         {game.desc}
                     </Typography>
 
-                    <Typography sx={{marginTop: 3, fontSize: { xs: '1rem', md: '1.2rem' }}} variant="h6">Genres:</Typography>
+                    <Typography variant="h6" sx={{marginTop: 3, fontSize: {xs: '1rem', md: '1.2rem'}}}>
+                        Genres:
+                    </Typography>
                     <ul style={{marginTop: 0}}>
                         {game.genres.map((genre, index) => (
                             <li key={index}>
-                                <Typography variant="body1" sx={{fontSize: { xs: '0.9rem', md: '1rem' }}}>{genre}</Typography>
+                                <Typography variant="body1"
+                                            sx={{fontSize: {xs: '0.9rem', md: '1rem'}}}>{genre}</Typography>
                             </li>
                         ))}
                     </ul>
                 </Box>
-            </div>
+            </Box>
         </Box>
     )
 }

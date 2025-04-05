@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {Typography, Box} from "@mui/material";
 import GameBanner from "../components/games/GameBanner";
-import RequirementsSelection from "../components/RequirementsSelection";
+import RequirementsSelection from "../components/requirements/RequirementsSelection";
 import axios from "axios";
 
 const GamePage = () => {
@@ -31,12 +31,14 @@ const GamePage = () => {
             + `&${chosenFps ? `&fps=${chosenFps}` : ''}` // Keeping the option to have no FPS chosen or choosing FPS
         const fetchPerformances = async () => {
             try {
-                const response = await axios.get(URL);
-                const receivedFps = response.data.fps;
-                setFetchedFps(receivedFps);
-                // Compare fetched FPS with chosen FPS
-                if (chosenFps) {
-                    setIsFpsMet(receivedFps >= parseInt(chosenFps));
+                if (chosenResolution !== "" && chosenSetting !== "") {
+                    const response = await axios.get(URL);
+                    const receivedFps = response.data.fps;
+                    setFetchedFps(receivedFps);
+                    // Compare fetched FPS with chosen FPS
+                    if (chosenFps) {
+                        setIsFpsMet(receivedFps >= parseInt(chosenFps));
+                    }
                 }
             } catch (error) {
                 console.log(`Error fetching game requirements: `, error);
@@ -55,29 +57,34 @@ const GamePage = () => {
 
             <GameBanner game={game}/>
 
-            <RequirementsSelection
-                game={game}
-                resolution={chosenResolution}
-                setResolution={setResolution}
-                setting={chosenSetting}
-                setSetting={setSetting}
-                fps={chosenFps}
-                setFps={setFps}/>
+            {/* Trailer + Requirements Side by Side */}
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                gap: 3
+            }}>
+                <Box sx={{flex: 0.8}}>
+                    <RequirementsSelection
+                        game={game}
+                        resolution={chosenResolution}
+                        setResolution={setResolution}
+                        setting={chosenSetting}
+                        setSetting={setSetting}
+                        fps={chosenFps}
+                        setFps={setFps}/>
 
-            {/*
-            <Box sx={{marginTop: 2}}>
-                <Typography variant="h5">Your Hardware:</Typography>
-                <Typography>CPU: {cpu.model}</Typography>
-                <Typography>GPU: {gpu.model}</Typography>
-                <Typography>RAM: {ramAmount} GB</Typography>
-            </Box> */}
-            {/* TODO remove on release */}
-            {/* <Typography variant="h6">Fetched FPS:{fetchedFps !== null ? fetchedFps : "Loading..."}</Typography> */}
-            {chosenFps && (
-                <Typography variant="h6">
-                    Your chosen FPS ({chosenFps}) is {isFpsMet ? "achievable ✅" : "not achievable ❌"}.
-                </Typography>
-            )}
+                    {/* TODO remove on release */}
+                    {/* <Typography variant="h6">Fetched FPS:{fetchedFps !== null ? fetchedFps : "Loading..."}</Typography> */}
+                    {chosenFps && (
+                        <Typography variant="h6">
+                            Your chosen FPS ({chosenFps}) is {isFpsMet ? "achievable ✅" : "not achievable ❌"}.
+                        </Typography>
+                    )}
+                </Box>
+            </Box>
+
         </Box>
     );
 };
