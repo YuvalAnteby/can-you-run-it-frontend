@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import GameCard from "../components/games/GameCard";
+import { fetchRowConfigs } from "../api/gamesApi";
 import axios from "axios";
 import {Box, Stack} from "@mui/material";
+import GamesShelf from "../components/games/GamesShelf";
 
 
 const Games = () => {
+    const [shelves, setShelves] = useState([]);
+    const [loading, setLoading] = useState(true);
     const location = useLocation();
     const { cpu, gpu, ramAmount } = location.state || {};
     const [games, setGames] = useState([]); // All games from API
@@ -50,10 +54,39 @@ const Games = () => {
         }
     }, [debouncedQuery, games]);
 
+    // Get the config json file
+    useEffect(() => {
+        const getConfigs = async () => {
+            try {
+                const data = await fetchRowConfigs();
+                setShelves(data);
+            } catch (error) {
+                console.error("Failed to load shelf config:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        getConfigs();
+    }, []);
+
+    if (loading) return <div>Loading shelves...</div>;
 
     return (
         /* Main div */
             <Box sx={{ padding: '20px' }}>
+                {shelves.map((shelf) => (
+                    <GamesShelf
+                        key={shelf.row_id}
+                        title={shelf.title}
+                        fetchUrl={shelf.fetch_url}
+                        params={shelf.params}
+                        cpu={cpu}
+                        gpu={gpu}
+                        ramAmount={ramAmount}
+                    />
+                ))}
+
+                {/*}
                 <Stack direction="row" spacing={3} flexWrap="wrap">
                     {games.map((game) => (
                         <Box key={game.id} sx={{ width: { xs: '100%', sm: '48%', md: '23%' }, marginBottom: 2 }}>
@@ -61,6 +94,7 @@ const Games = () => {
                         </Box>
                     ))}
                 </Stack>
+                */}
             </Box>
     );
 };
