@@ -2,7 +2,6 @@ import React from 'react';
 import {Box, Slider, Typography} from "@mui/material";
 
 const FpsSlider = ({minFps, maxFps, fps, setFps}) => {
-console.log(fps)
     return (
         <Box sx={{ padding: "10px" }}>
             <Typography variant="body1">Select Target FPS:</Typography>

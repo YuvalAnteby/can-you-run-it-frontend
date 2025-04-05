@@ -18,7 +18,8 @@ const HardwareSelection = ({type, brand, setBrand, hardware, setHardware}) => {
      */
     useEffect(() => {
         const debounceTimeout = setTimeout(() => {
-            setDebouncedQuery(hardware?.model || "");  // Use gpuModelQuery here
+            const trimmedQuery = hardware?.model?.replace(/\(.*?\)/g, "").trim()
+            setDebouncedQuery(trimmedQuery || "");  // Use gpuModelQuery here
         }, 500); // Delay in milliseconds (adjust as needed)
         return () => clearTimeout(debounceTimeout);
     }, [hardware?.model]);  // Use gpuModelQuery as the dependency

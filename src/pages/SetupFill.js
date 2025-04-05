@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button} from "@mui/material";
-import RamSelection from "../components/RamSelection";
-import HardwareSelection from "../components/HardwareSelection";
+import RamSelection from "../components/hardware/RamSelection";
+import HardwareSelection from "../components/hardware/HardwareSelection";
 import {useNavigate} from "react-router-dom";
 
 const SetupFill = () => {

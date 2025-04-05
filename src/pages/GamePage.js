@@ -12,15 +12,15 @@ const GamePage = () => {
     const [chosenResolution, setResolution] = useState('');
     const [chosenSetting, setSetting] = useState('');
     const [chosenFps, setFps] = useState(null);
-    const [fetchedFps, setFetchedFps] = useState(null);
+    const [fetchedFps, setFetchedFps] = useState(null); ///TODO remove on release
     const [isFpsMet, setIsFpsMet] = useState(null);
 
 
     useEffect(() => {
-        console.log("Game:", game.id);
-        console.log("CPU:", cpu.id);
-        console.log("GPU:", gpu.id);
-        console.log("RAM Amount:", ramAmount);
+        //console.log("Game:", game.id);
+        //console.log("CPU:", cpu.id);
+        //console.log("GPU:", gpu.id);
+        //console.log("RAM Amount:", ramAmount);
         const URL = `http://localhost:8000/api/req/game-requirements/`
             + `?game_id=${game.id.trim()}`
             + `&cpu_id=${cpu.id.trim()}`
@@ -43,7 +43,7 @@ const GamePage = () => {
             }
         };
         fetchPerformances();
-    }, [chosenFps, chosenSetting, chosenResolution]);
+    }, [chosenFps, chosenSetting, chosenResolution, game.id, cpu.id, gpu.id, ramAmount]);
 
 
     if (!game) {
@@ -71,7 +71,8 @@ const GamePage = () => {
                 <Typography>GPU: {gpu.model}</Typography>
                 <Typography>RAM: {ramAmount} GB</Typography>
             </Box> */}
-            {/* <Typography variant="h6">Fetched FPS: {fetchedFps !== null ? fetchedFps : "Loading..."}</Typography> */}
+            {/* TODO remove on release */}
+            {/* <Typography variant="h6">Fetched FPS:{fetchedFps !== null ? fetchedFps : "Loading..."}</Typography> */}
             {chosenFps && (
                 <Typography variant="h6">
                     Your chosen FPS ({chosenFps}) is {isFpsMet ? "achievable ✅" : "not achievable ❌"}.
