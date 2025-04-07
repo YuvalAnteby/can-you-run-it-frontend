@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import GameCard from "../games/GameCard";
 import axios from "axios";
 import {Box, Stack, Typography} from "@mui/material";
+import SkeletonCard from "./SkeletonCard";
 
-const GamesShelf = ({title, fetchUrl, params, cpu, gpu, ramAmount}) => {
+const GamesShelf = ({title, fetchUrl, params, cpu, gpu, ramAmount, loading}) => {
 
     const [games, setGames] = useState([]);
 
@@ -17,9 +18,11 @@ const GamesShelf = ({title, fetchUrl, params, cpu, gpu, ramAmount}) => {
                 console.error(`Failed to fetch games for ${title}`, error);
             }
         };
+        if (!loading) {
+            fetchGames();
+        }
+    }, [fetchUrl, loading, params, title]);
 
-        fetchGames();
-    }, [fetchUrl, params, title]);
 
     return (
         <Box sx={{mb: 4}}>
@@ -57,11 +60,19 @@ const GamesShelf = ({title, fetchUrl, params, cpu, gpu, ramAmount}) => {
                     width: '100%', // ensures the container doesn't expand the page
                     maxWidth: '100vw', // extra safety to prevent horizontal page scroll
                 }}>
-                    {games.map((game) => (
-                        <Box key={game.id} sx={{minWidth: 200}}>
-                            <GameCard game={game} cpu={cpu} gpu={gpu} ramAmount={ramAmount}/>
-                        </Box>
-                    ))}
+                    {loading
+                        ? [...Array(4)].map((_, index) => (
+                            <SkeletonCard key={index} />
+                        ))
+                        : games.map((game) => (
+                            <Box
+                                key={game.id}
+                                sx={{ width: { xs: '100%', sm: '48%', md: '23%' }, mb: 2 }}
+                            >
+                                <GameCard game={game} cpu={cpu} gpu={gpu} ramAmount={ramAmount} />
+                            </Box>
+                        ))
+                    }
                 </Box>
             </Box>
         </Box>
