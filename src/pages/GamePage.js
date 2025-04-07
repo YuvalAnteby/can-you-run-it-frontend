@@ -76,13 +76,21 @@ const GamePage = () => {
                         fps={chosenFps}
                         setFps={setFps}/>
 
-                    {/* TODO remove on release */}
-                    {/* <Typography variant="h6">Fetched FPS:{fetchedFps !== null ? fetchedFps : "Loading..."}</Typography> */}
-                    {chosenFps && (
+                    {/* Show we have no info if no FPS info was fetched */}
+                    {chosenFps && isFpsMet === null && (
+                        <Typography variant="h6">
+                            Unknown performance for this setup & settings ❓
+                        </Typography>
+                    )}
+
+                    {/* Show if the user can run or not depending on the FPS fetched */}
+                    {chosenFps && isFpsMet !== null && (
                         <Typography variant="h6">
                             Your chosen FPS ({chosenFps}) is {isFpsMet ? "achievable ✅" : "not achievable ❌"}.
                         </Typography>
                     )}
+
+
                 </Box>
 
                 <Box sx={{flex: 1}}>
