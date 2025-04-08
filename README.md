@@ -68,6 +68,7 @@ This is the frontend for **Can You Run It**, a performance compatibility checker
 - Performance optimization and lazy loading
 - Responsive design polish
 - Light/dark theme toggle
+- Fallback messaging powered by the backend's LLM API call to provide estimated guidance (e.g. “Likely playable at 60 FPS on 1080p High settings ✅”)
 
 ---
 
