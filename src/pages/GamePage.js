@@ -16,12 +16,7 @@ const GamePage = () => {
     const [fetchedFps, setFetchedFps] = useState(null); ///TODO remove on release
     const [isFpsMet, setIsFpsMet] = useState(null);
 
-
     useEffect(() => {
-        //console.log("Game:", game.id);
-        //console.log("CPU:", cpu.id);
-        //console.log("GPU:", gpu.id);
-        //console.log("RAM Amount:", ramAmount);
         const URL = `http://localhost:8000/api/req/game-requirements/`
             + `?game_id=${game.id.trim()}`
             + `&cpu_id=${cpu.id.trim()}`
@@ -55,10 +50,9 @@ const GamePage = () => {
 
     return (
         <Box sx={{padding: 3, width: "100%", height: "100%", paddingTop: '60px',}}>
-
+            {/* Trailer with basic info of the game */}
             <GameBanner game={game}/>
 
-            {/* Trailer + Requirements Side by Side */}
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -66,6 +60,7 @@ const GamePage = () => {
                 alignItems: 'center',
                 gap: 3
             }}>
+                {/* Requirements picker and results */}
                 <Box sx={{flex: 1}}>
                     <RequirementsSelection
                         game={game}
@@ -77,27 +72,22 @@ const GamePage = () => {
                         setFps={setFps}/>
 
                     {/* Show we have no info if no FPS info was fetched */}
-                    {chosenFps && isFpsMet === null && (
+                    {chosenFps && fetchedFps && isFpsMet === null && (
                         <Typography variant="h6">
                             Unknown performance for this setup & settings ❓
                         </Typography>
                     )}
 
                     {/* Show if the user can run or not depending on the FPS fetched */}
-                    {chosenFps && isFpsMet !== null && (
+                    {chosenFps && fetchedFps && isFpsMet !== null && (
                         <Typography variant="h6">
                             Your chosen FPS ({chosenFps}) is {isFpsMet ? "achievable ✅" : "not achievable ❌"}.
                         </Typography>
                     )}
-
-
                 </Box>
-
+                {/* Show additional info about the game */}
                 <Box sx={{flex: 1}}>
-                    <AdditionalInfo
-                    game={game}>
-
-                    </AdditionalInfo>
+                    <AdditionalInfo game={game}></AdditionalInfo>
                 </Box>
             </Box>
 
