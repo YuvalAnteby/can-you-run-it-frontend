@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
-import GameCard from "../components/games/GameCard";
-import { fetchRowConfigs } from "../api/gamesApi";
+import {fetchRowConfigs} from "../api/gamesApi";
 import axios from "axios";
-import {Box, Stack} from "@mui/material";
+import {Box, Skeleton} from "@mui/material";
 import GamesShelf from "../components/games/GamesShelf";
 
 
@@ -11,7 +10,7 @@ const Games = () => {
     const [shelves, setShelves] = useState([]);
     const [loading, setLoading] = useState(true);
     const location = useLocation();
-    const { cpu, gpu, ramAmount } = location.state || {};
+    const {cpu, gpu, ramAmount} = location.state || {};
     const [games, setGames] = useState([]); // All games from API
     const [searchQuery, setSearchQuery] = useState(""); // Search input
     const [filteredGames, setFilteredGames] = useState([]); // Games matching search
@@ -69,33 +68,36 @@ const Games = () => {
         getConfigs();
     }, []);
 
-    if (loading) return <div>Loading shelves...</div>;
+    /* Show a skeleton loading animation */
+    if (loading) {
+        return (
+            <Box sx={{padding: '20px'}}>
+                {[...Array(3)].map((_, index) => (
+                    <Box key={index} sx={{marginBottom: 4}}>
+                        <Skeleton variant="text" width={200} height={40} animation="wave"/>
+                        <Skeleton variant="rectangular" height={250} animation="wave" sx={{borderRadius: 2}}/>
+                    </Box>
+                ))}
+            </Box>
+        );
+    }
 
     return (
-        /* Main div */
-            <Box sx={{ padding: '20px' }}>
-                {shelves.map((shelf) => (
-                    <GamesShelf
-                        key={shelf.row_id}
-                        title={shelf.title}
-                        fetchUrl={shelf.fetch_url}
-                        params={shelf.params}
-                        cpu={cpu}
-                        gpu={gpu}
-                        ramAmount={ramAmount}
-                    />
-                ))}
-
-                {/*}
-                <Stack direction="row" spacing={3} flexWrap="wrap">
-                    {games.map((game) => (
-                        <Box key={game.id} sx={{ width: { xs: '100%', sm: '48%', md: '23%' }, marginBottom: 2 }}>
-                            <GameCard game={game} cpu={cpu} gpu={gpu} ramAmount={ramAmount} />
-                        </Box>
-                    ))}
-                </Stack>
-                */}
-            </Box>
+        /* Shelves from config.json file */
+        <Box sx={{padding: '20px'}}>
+            {shelves.map((shelf) => (
+                <GamesShelf
+                    key={shelf.row_id}
+                    title={shelf.title}
+                    fetchUrl={shelf.fetch_url}
+                    params={shelf.params}
+                    cpu={cpu}
+                    gpu={gpu}
+                    ramAmount={ramAmount}
+                    loading={loading}
+                />
+            ))}
+        </Box>
     );
 };
 
