@@ -31,6 +31,7 @@ const GamePage = () => {
                     const response = await axios.get(URL);
                     const receivedFps = response.data.fps;
                     setFetchedFps(receivedFps);
+                    console.log("fetchedFps", receivedFps);
                     // Compare fetched FPS with chosen FPS
                     if (chosenFps) {
                         setIsFpsMet(receivedFps >= parseInt(chosenFps));
@@ -82,6 +83,13 @@ const GamePage = () => {
                     {chosenFps && fetchedFps && isFpsMet !== null && (
                         <Typography variant="h6">
                             Your chosen FPS ({chosenFps}) is {isFpsMet ? "achievable ✅" : "not achievable ❌"}.
+                        </Typography>
+                    )}
+
+                    {/* Show the best the user can expect if they didn't pick target FPS */}
+                    {chosenFps === null && fetchedFps && (
+                        <Typography variant="h6">
+                            The best FPS you can expect on average: {fetchedFps}
                         </Typography>
                     )}
                 </Box>
