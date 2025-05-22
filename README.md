@@ -15,11 +15,9 @@ This is the frontend for **Can You Run It**, a performance compatibility checker
 
 ## 🚧 Project Status
 
-> 🛠️ **Currently in active development**
-
-- The app is functional for demo/testing purposes but incomplete.
-- The backend and database are required for API functionality and are not publicly available at this time.
-- UI and feature work is ongoing.
+> This repository is no longer maintained.
+> Development has moved to the unified monorepo: [Can I Run It]( https://github.com/YuvalAnteby/Can-I-Run-It)</br> 
+> All backend and frontend code, history, and future updates are now located there.
 
 ---
 
@@ -30,7 +28,6 @@ This is the frontend for **Can You Run It**, a performance compatibility checker
     - [Implemented](#-implemented)
     - [Upcoming](#-upcoming)
 - [Running Locally](#-running-locally)
-- [Screenshots](#-screenshots)
 - [Contributing](#-contributing)
 - [License](#-license)
 - [Related Projects](#-related-projects)
@@ -90,11 +87,6 @@ npm install
 npm start
 ```
 The app will run at http://localhost:3000
-
----
-
-## 🖼️ Screenshots
-Coming soon! 🚧
 
 ---
 
